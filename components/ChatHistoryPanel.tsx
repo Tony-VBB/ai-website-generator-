@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -31,7 +31,7 @@ export default function ChatHistoryPanel({ onLoadChat }: ChatHistoryProps) {
   const [loading, setLoading] = useState(false);
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
 
-  const fetchChats = async () => {
+  const fetchChats = useCallback(async () => {
     if (!session?.user) return;
     
     setLoading(true);
@@ -48,11 +48,11 @@ export default function ChatHistoryPanel({ onLoadChat }: ChatHistoryProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session?.user]);
 
   useEffect(() => {
     fetchChats();
-  }, [session?.user]);
+  }, [fetchChats]);
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();

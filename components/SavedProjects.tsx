@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface Project {
   _id: string;
@@ -21,7 +21,7 @@ export default function SavedProjects({ onLoadProject }: SavedProjectsProps) {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     if (!session) return;
     
     setLoading(true);
@@ -45,11 +45,11 @@ export default function SavedProjects({ onLoadProject }: SavedProjectsProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [session]);
 
   useEffect(() => {
     fetchProjects();
-  }, [session]);
+  }, [fetchProjects]);
 
   const handleDelete = async (id: string) => {
     if (!confirm('Are you sure you want to delete this project?')) return;
