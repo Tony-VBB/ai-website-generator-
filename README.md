@@ -1,5 +1,7 @@
 # AI Website Generator
 
+🌐 **Live Demo**: [https://ai-powered-website-generator-pearl.vercel.app](https://ai-powered-website-generator-pearl.vercel.app)
+
 An intelligent AI-powered website generator with **user authentication** and **project persistence**, using a **three-stage LLM pipeline** to transform simple prompts into professional, production-ready websites.
 
 ## ✨ What Makes This Special
